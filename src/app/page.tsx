@@ -71,110 +71,62 @@ export default function OverviewPage() {
   ];
 
   return (
-    <div style={{ maxWidth: "720px", margin: "0 auto", padding: "80px 24px 120px" }}>
+    <div className="max-w-3xl mx-auto px-6 pt-20 pb-32">
       
       {/* Hero Section */}
-      <div className="animate-enter" style={{ marginBottom: "64px", textAlign: "center" }}>
-        <span className="label-mono" style={{ display: "inline-block", marginBottom: "16px" }}>
+      <div className="animate-fade-in mb-16 text-center">
+        <span className="font-mono text-xs uppercase tracking-widest text-muted mb-4 inline-block">
           Pseudonyms Sovereign ID
         </span>
-        <h1 
-          className="font-serif-title"
-          style={{
-            fontSize: "48px",
-            color: "var(--text-primary)",
-            margin: "0 0 16px",
-            lineHeight: 1.1,
-          }}
-        >
+        <h1 className="font-display text-5xl font-bold text-foreground mb-4 leading-tight">
           {user ? `Welcome back, ${user.user_metadata?.username || user.email?.split("@")[0]}.` : "Initializing Workspace..."}
         </h1>
-        <p
-          style={{
-            fontSize: "16px",
-            color: "var(--text-secondary)",
-            maxWidth: "480px",
-            margin: "0 auto",
-            lineHeight: 1.6,
-          }}
-        >
+        <p className="text-base text-muted max-w-lg mx-auto leading-relaxed">
           The central cognitive context and identity layer across your entire multi-agent ecosystem.
         </p>
       </div>
 
       {/* Feature Cards Grid */}
-      <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+      <div className="flex flex-col gap-6">
         {features.map((f, i) => (
           <div
             key={f.index}
-            className={`animate-enter delay-${i + 1} glass-panel interactive-card`}
-            style={{
-              padding: "32px",
-              display: "grid",
-              gridTemplateColumns: "auto 1fr auto",
-              gap: "24px",
-              alignItems: "start",
-              borderRadius: "16px",
-            }}
+            className={`animate-slide-up bg-surface-2 hover:bg-surface-3 shadow-card hover:shadow-card-hover border border-border-subtle p-8 grid grid-cols-[auto_1fr_auto] gap-6 items-start rounded-2xl transition-all`}
+            style={{ animationDelay: `${(i + 1) * 100}ms`, animationFillMode: 'both' }}
           >
             {/* Index Badge */}
-            <div
-              style={{
-                width: "40px",
-                height: "40px",
-                borderRadius: "10px",
-                background: "var(--bg-canvas)",
-                border: "1px solid var(--border-strong)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                color: "var(--text-primary)",
-              }}
-            >
-              <span className="label-mono">{f.index}</span>
+            <div className="w-10 h-10 rounded-xl bg-surface-1 border border-border-strong flex items-center justify-center text-foreground">
+              <span className="font-mono text-xs">{f.index}</span>
             </div>
 
             {/* Content */}
-            <div style={{ padding: "4px 0 0" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "8px" }}>
-                <h2 style={{ fontSize: "16px", fontWeight: 600, color: "var(--text-primary)", margin: 0 }}>
+            <div className="pt-1">
+              <div className="flex items-center gap-3 mb-2">
+                <h2 className="text-base font-semibold text-foreground m-0">
                   {f.title}
                 </h2>
                 
                 {/* Status Pill */}
-                <div style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "6px",
-                  padding: "4px 8px",
-                  borderRadius: "20px",
-                  background: f.status ? "rgba(16, 185, 129, 0.1)" : "var(--bg-canvas)",
-                  border: `1px solid ${f.status ? "rgba(16, 185, 129, 0.2)" : "var(--border-strong)"}`,
-                }}>
-                  <div className={`status-dot ${f.status ? "active" : "inactive"}`} />
-                  <span className="label-mono" style={{ color: f.status ? "var(--green)" : "var(--text-muted)" }}>
+                <div className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border ${
+                  f.status 
+                    ? "bg-neon-emerald/10 border-neon-emerald/20" 
+                    : "bg-surface-1 border-border-strong"
+                }`}>
+                  <div className={`w-1.5 h-1.5 rounded-full ${f.status ? "bg-neon-emerald shadow-glow-em" : "bg-muted"}`} />
+                  <span className={`font-mono text-[10px] uppercase tracking-wider ${f.status ? "text-neon-emerald" : "text-muted"}`}>
                     {f.statusLabel}
                   </span>
                 </div>
               </div>
               
-              <p style={{ fontSize: "14px", color: "var(--text-secondary)", lineHeight: 1.6, margin: 0 }}>
+              <p className="text-sm text-muted leading-relaxed m-0">
                 {f.body}
               </p>
 
               {f.href && f.cta && (
                 <Link
                   href={f.href}
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: "6px",
-                    marginTop: "16px",
-                    fontSize: "13px",
-                    fontWeight: 600,
-                    color: "var(--accent)",
-                    textDecoration: "none",
-                  }}
+                  className="inline-flex items-center gap-1.5 mt-4 text-sm font-semibold text-brand-400 hover:text-brand-300 transition-colors"
                 >
                   {f.cta}
                   <ArrowRight size={14} />

@@ -47,70 +47,57 @@ export default function SettingsPage() {
   ];
 
   return (
-    <div style={{ maxWidth: "600px", margin: "0 auto", padding: "80px 24px 120px" }}>
+    <div className="max-w-2xl mx-auto px-6 pt-20 pb-32">
       
       {/* Header */}
-      <div className="animate-enter" style={{ marginBottom: "56px" }}>
-        <span className="label-mono" style={{ display: "inline-block", marginBottom: "16px" }}>
+      <div className="animate-fade-in mb-14">
+        <span className="font-mono text-xs uppercase tracking-widest text-muted mb-4 inline-block">
           Preferences
         </span>
-        <h1 
-          className="font-serif-title"
-          style={{ fontSize: "48px", color: "var(--text-primary)", margin: "0 0 16px", lineHeight: 1.1 }}
-        >
+        <h1 className="font-display text-5xl font-bold text-foreground mb-4 leading-tight">
           Ecosystem Identity & Keys
         </h1>
-        <p style={{ fontSize: "16px", color: "var(--text-secondary)", lineHeight: 1.6 }}>
+        <p className="text-base text-muted leading-relaxed">
           Set your username and API keys once here. They are securely encrypted in your Supabase profile and dynamically loaded by Metaphor, Orion, and Atlas.
         </p>
       </div>
 
       {/* Form */}
-      <div className="animate-enter delay-1 glass-panel" style={{ padding: "40px 32px", borderRadius: "16px" }}>
-        <div style={{ display: "flex", flexDirection: "column", gap: "24px", marginBottom: "40px" }}>
+      <div className="animate-slide-up bg-surface-2 shadow-card border border-border-subtle p-8 sm:p-10 rounded-2xl">
+        <div className="flex flex-col gap-6 mb-10">
           
           {/* Username Field */}
           <div>
             <label 
               htmlFor="username" 
-              className="label-mono"
-              style={{ display: "block", marginBottom: "12px", color: "var(--text-primary)" }}
+              className="block font-mono text-xs uppercase tracking-widest text-foreground mb-3"
             >
               Global Username
             </label>
-            <div style={{ position: "relative" }}>
+            <div className="relative">
               <input
                 id="username"
                 type="text"
                 placeholder="e.g. Theo"
                 value={keys.username}
                 onChange={(e) => setKeys((prev) => ({ ...prev, username: e.target.value }))}
-                style={{
-                  width: "100%", padding: "14px 16px",
-                  background: "var(--bg-canvas)", border: "1px solid var(--border-strong)",
-                  borderRadius: "12px", fontSize: "14px", color: "var(--text-primary)",
-                  fontFamily: "var(--font-sans)", outline: "none",
-                  transition: "all 0.2s var(--ease-out)", boxShadow: "var(--shadow-sm)"
-                }}
-                onFocus={(e) => e.target.style.borderColor = "var(--accent)"}
-                onBlur={(e) => e.target.style.borderColor = "var(--border-strong)"}
+                className="w-full py-3.5 px-4 bg-surface-1 border border-border-strong rounded-xl text-sm text-foreground font-sans focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-all shadow-sm"
               />
             </div>
           </div>
 
-          <div style={{ height: "1px", background: "var(--border-subtle)", margin: "8px 0" }} />
+          <div className="h-px bg-border-subtle my-2" />
 
           {providers.map((p) => (
             <div key={p.id}>
               <label 
                 htmlFor={p.id} 
-                className="label-mono"
-                style={{ display: "block", marginBottom: "12px", color: "var(--text-primary)" }}
+                className="block font-mono text-xs uppercase tracking-widest text-foreground mb-3"
               >
                 {p.label} API Key
               </label>
-              <div style={{ position: "relative" }}>
-                <div style={{ position: "absolute", left: "16px", top: "50%", transform: "translateY(-50%)", color: "var(--text-muted)" }}>
+              <div className="relative">
+                <div className="absolute left-4 top-1/2 -translate-y-1/2 text-muted">
                   <Key size={16} />
                 </div>
                 <input
@@ -119,53 +106,24 @@ export default function SettingsPage() {
                   placeholder={p.placeholder}
                   value={keys[p.id]}
                   onChange={(e) => setKeys((prev) => ({ ...prev, [p.id]: e.target.value }))}
-                  style={{
-                    width: "100%", padding: "14px 16px 14px 44px",
-                    background: "var(--bg-canvas)", border: "1px solid var(--border-strong)",
-                    borderRadius: "12px", fontSize: "14px", color: "var(--text-primary)",
-                    fontFamily: "var(--font-mono)", outline: "none",
-                    transition: "all 0.2s var(--ease-out)", boxShadow: "var(--shadow-sm)"
-                  }}
-                  onFocus={(e) => e.target.style.borderColor = "var(--accent)"}
-                  onBlur={(e) => e.target.style.borderColor = "var(--border-strong)"}
+                  className="w-full py-3.5 pr-4 pl-11 bg-surface-1 border border-border-strong rounded-xl text-sm text-foreground font-mono focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-all shadow-sm"
                 />
               </div>
             </div>
           ))}
         </div>
 
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", paddingTop: "24px", borderTop: "1px solid var(--border-subtle)" }}>
-          <div style={{ fontSize: "13px", color: "var(--text-muted)", display: "flex", alignItems: "center", gap: "6px" }}>
-            {status === "saved" && <><CheckCircle2 size={16} color="var(--green)" /> <span style={{ color: "var(--green)" }}>Synced securely</span></>}
-            {status === "error" && <><AlertCircle size={16} color="var(--red)" /> <span style={{ color: "var(--red)" }}>Update failed</span></>}
-            {status === "saving" && <span>Encrypting...</span>}
+        <div className="flex items-center justify-between pt-6 border-t border-border-subtle">
+          <div className="text-sm flex items-center gap-2">
+            {status === "saved" && <span className="text-neon-emerald flex items-center gap-1.5"><CheckCircle2 size={16} /> Synced securely</span>}
+            {status === "error" && <span className="text-red-500 flex items-center gap-1.5"><AlertCircle size={16} /> Update failed</span>}
+            {status === "saving" && <span className="text-muted">Encrypting...</span>}
           </div>
           
           <button
             onClick={handleSave}
             disabled={status === "saving"}
-            style={{
-              display: "inline-flex", alignItems: "center", gap: "8px",
-              padding: "12px 24px", background: "var(--text-primary)",
-              border: "1px solid var(--text-primary)", borderRadius: "30px",
-              fontSize: "14px", fontWeight: 500, color: "var(--bg-canvas)",
-              cursor: status === "saving" ? "not-allowed" : "pointer", 
-              transition: "all 0.2s var(--ease-out)",
-              boxShadow: "var(--shadow-md)", fontFamily: "var(--font-sans)",
-              opacity: status === "saving" ? 0.7 : 1
-            }}
-            onMouseEnter={(e) => {
-              if (status !== "saving") {
-                e.currentTarget.style.transform = "translateY(-2px)";
-                e.currentTarget.style.boxShadow = "var(--shadow-lg)";
-              }
-            }}
-            onMouseLeave={(e) => {
-              if (status !== "saving") {
-                e.currentTarget.style.transform = "translateY(0)";
-                e.currentTarget.style.boxShadow = "var(--shadow-md)";
-              }
-            }}
+            className="inline-flex items-center gap-2 px-6 py-3 bg-foreground hover:bg-white text-background text-sm font-medium rounded-full shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:shadow-md disabled:hover:translate-y-0 active:scale-[0.98]"
           >
             <Save size={16} />
             {status === "saving" ? "Saving..." : "Save Configuration"}

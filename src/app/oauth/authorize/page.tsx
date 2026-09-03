@@ -43,48 +43,48 @@ function AuthorizeForm() {
 
   return (
     <div className="min-h-[75vh] flex items-center justify-center px-4">
-      <div className="w-full max-w-md glass-panel rounded-2xl p-6 sm:p-8 border border-border-subtle shadow-2xl space-y-6">
+      <div className="w-full max-w-md bg-surface-1 rounded-2xl p-6 sm:p-8 border border-border-subtle shadow-card space-y-6">
         
         {/* App connection header */}
         <div className="text-center space-y-3">
-          <div className="w-14 h-14 mx-auto rounded-2xl bg-gradient-to-tr from-brand-600 to-neon-cyan p-[1px] shadow-glow">
-            <div className="w-full h-full rounded-2xl bg-slate-900 flex items-center justify-center">
-              <Shield className="w-7 h-7 text-white" />
+          <div className="w-14 h-14 mx-auto rounded-2xl bg-border-strong p-[1px] shadow-glow-sm">
+            <div className="w-full h-full rounded-2xl bg-surface-2 flex items-center justify-center">
+              <Shield className="w-7 h-7 text-foreground" />
             </div>
           </div>
 
           <div>
-            <h1 className="text-lg font-bold text-white">Authorize Access</h1>
-            <p className="text-xs text-slate-400 font-mono mt-1">
-              <span className="text-white font-semibold">{app.name}</span> wants to connect to your Master Pseudonyms ID
+            <h1 className="text-lg font-bold text-foreground font-display">Authorize Access</h1>
+            <p className="text-xs text-muted font-mono mt-1">
+              <span className="text-foreground font-semibold">{app.name}</span> wants to connect to your Master Pseudonyms ID
             </p>
           </div>
         </div>
 
         {/* Master account info */}
-        <div className="p-3.5 rounded-xl bg-surface-2 border border-border-subtle flex items-center justify-between">
+        <div className="p-4 rounded-xl bg-surface-2 border border-border-subtle flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-full bg-brand-500 flex items-center justify-center font-bold text-xs text-white">
+            <div className="w-8 h-8 rounded-full bg-brand-600 flex items-center justify-center font-bold text-xs text-foreground">
               {user?.email?.slice(0, 2).toUpperCase() ?? "??"}
             </div>
             <div>
-              <p className="text-xs font-semibold text-white">{user?.email?.split("@")[0] ?? "—"}</p>
-              <p className="text-[10px] text-slate-400 font-mono">{user?.email ?? "—"}</p>
+              <p className="text-xs font-semibold text-foreground">{user?.email?.split("@")[0] ?? "—"}</p>
+              <p className="text-2xs text-muted font-mono">{user?.email ?? "—"}</p>
             </div>
           </div>
-          <span className="text-[10px] font-mono text-neon-emerald px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20">
+          <span className="text-2xs font-mono text-neon-emerald px-2 py-0.5 rounded bg-neon-emerald/10 border border-neon-emerald/20">
             Sovereign
           </span>
         </div>
 
         {/* Permissions list */}
         <div className="space-y-2">
-          <p className="text-xs font-mono uppercase text-slate-400 tracking-wider">Requested Privileges:</p>
+          <p className="text-xs font-mono uppercase text-muted tracking-wider">Requested Privileges:</p>
           <div className="space-y-1.5">
             {app.permissions.map((perm) => (
-              <div key={perm} className="flex items-center gap-2 text-xs text-slate-300">
+              <div key={perm} className="flex items-center gap-2 text-xs text-foreground/80">
                 <Check className="w-3.5 h-3.5 text-neon-cyan shrink-0" />
-                <span className="font-mono text-[11px]">{perm}</span>
+                <span className="font-mono text-2xs">{perm}</span>
               </div>
             ))}
           </div>
@@ -95,7 +95,7 @@ function AuthorizeForm() {
           <button
             onClick={handleApprove}
             disabled={approving}
-            className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-brand-600 to-neon-cyan text-white text-xs font-semibold shadow-glow hover:opacity-90 active:scale-[0.99] transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+            className="w-full py-3 px-4 rounded-xl bg-brand-600 hover:bg-brand-500 text-foreground text-sm font-semibold shadow-glow-sm active:scale-[0.99] transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
           >
             <span>{approving ? "Exchanging Tokens..." : "Allow & Unlock Application"}</span>
             <ArrowRight className="w-4 h-4" />
@@ -103,7 +103,7 @@ function AuthorizeForm() {
 
           <button
             onClick={() => router.push("/")}
-            className="w-full py-2.5 text-xs text-slate-400 hover:text-white transition-colors"
+            className="w-full py-2.5 text-xs text-muted hover:text-foreground transition-colors"
           >
             Deny Access & Return
           </button>

@@ -42,35 +42,31 @@ export default function OnboardingPage() {
     router.push("/");
   };
 
-  if (!user) return <div className="min-h-screen bg-[var(--bg-canvas)]" />;
+  if (!user) return <div className="min-h-screen bg-background" />;
 
   return (
-    <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", padding: "24px", background: "var(--bg-canvas)" }}>
-      <div 
-        className="animate-enter"
-        style={{
-          width: "100%", maxWidth: "500px",
-          background: "var(--bg-surface)",
-          border: "1px solid var(--border-subtle)",
-          borderRadius: "24px",
-          padding: "48px 40px",
-          boxShadow: "var(--shadow-float)",
-        }}
+    <div className="min-h-screen flex items-center justify-center px-6 bg-background">
+      <div
+        className="animate-slide-up w-full max-w-lg bg-surface-1 border border-border-subtle rounded-3xl p-12 shadow-card"
       >
-        <div style={{ display: "flex", gap: "8px", marginBottom: "40px", justifyContent: "center" }}>
+        {/* Progress steps */}
+        <div className="flex gap-2 mb-10 justify-center">
           {[1, 2, 3].map(i => (
-            <div key={i} style={{ width: "32px", height: "4px", borderRadius: "2px", background: step >= i ? "var(--accent)" : "var(--border-strong)" }} />
+            <div
+              key={i}
+              className={`h-1 w-8 rounded-full transition-all duration-300 ${step >= i ? "bg-brand-500" : "bg-border-strong"}`}
+            />
           ))}
         </div>
 
         {step === 1 && (
-          <div className="animate-enter">
-            <div style={{ textAlign: "center", marginBottom: "32px" }}>
-              <div style={{ width: "48px", height: "48px", margin: "0 auto 24px", background: "var(--bg-canvas)", border: "1px solid var(--border-strong)", borderRadius: "14px", display: "flex", alignItems: "center", justifyContent: "center", color: "var(--accent)" }}>
+          <div className="animate-fade-in">
+            <div className="text-center mb-8">
+              <div className="w-12 h-12 mx-auto mb-6 bg-surface-2 border border-border-strong rounded-2xl flex items-center justify-center text-brand-400">
                 <User size={24} />
               </div>
-              <h1 className="font-serif-title" style={{ fontSize: "28px", color: "var(--text-primary)", marginBottom: "8px" }}>Claim your Pseudonym</h1>
-              <p style={{ fontSize: "14px", color: "var(--text-secondary)" }}>Choose the handle you'll use across the ecosystem.</p>
+              <h1 className="font-display text-3xl font-bold text-foreground mb-2">Claim your Pseudonym</h1>
+              <p className="text-sm text-muted">Choose the handle you'll use across the ecosystem.</p>
             </div>
             
             <input
@@ -78,25 +74,27 @@ export default function OnboardingPage() {
               placeholder="e.g. Satoshi"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              style={{
-                width: "100%", padding: "14px 16px", background: "var(--bg-canvas)", border: "1px solid var(--border-strong)", borderRadius: "14px", fontSize: "14px", color: "var(--text-primary)", outline: "none", marginBottom: "24px"
-              }}
+              className="w-full py-3.5 px-4 mb-6 bg-surface-2 border border-border-strong rounded-xl text-sm text-foreground focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-all"
             />
             
-            <button onClick={handleSaveProfile} disabled={!username || isLoading} style={{ width: "100%", padding: "14px", background: "var(--text-primary)", color: "var(--bg-canvas)", border: "none", borderRadius: "12px", fontSize: "14px", fontWeight: 600, display: "flex", justifyContent: "center", alignItems: "center", gap: "8px", cursor: (!username || isLoading) ? "not-allowed" : "pointer", opacity: (!username || isLoading) ? 0.7 : 1 }}>
+            <button
+              onClick={handleSaveProfile}
+              disabled={!username || isLoading}
+              className="w-full py-3.5 bg-foreground hover:bg-white text-background text-sm font-semibold rounded-xl flex justify-center items-center gap-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.99]"
+            >
               Continue <ArrowRight size={16} />
             </button>
           </div>
         )}
 
         {step === 2 && (
-          <div className="animate-enter">
-            <div style={{ textAlign: "center", marginBottom: "32px" }}>
-              <div style={{ width: "48px", height: "48px", margin: "0 auto 24px", background: "var(--bg-canvas)", border: "1px solid var(--border-strong)", borderRadius: "14px", display: "flex", alignItems: "center", justifyContent: "center", color: "var(--accent)" }}>
+          <div className="animate-fade-in">
+            <div className="text-center mb-8">
+              <div className="w-12 h-12 mx-auto mb-6 bg-surface-2 border border-border-strong rounded-2xl flex items-center justify-center text-brand-400">
                 <Key size={24} />
               </div>
-              <h1 className="font-serif-title" style={{ fontSize: "28px", color: "var(--text-primary)", marginBottom: "8px" }}>Sovereign AI Config</h1>
-              <p style={{ fontSize: "14px", color: "var(--text-secondary)" }}>Add your Gemini API key to power Clario and Metaphor. Stored securely in your profile metadata.</p>
+              <h1 className="font-display text-3xl font-bold text-foreground mb-2">Sovereign AI Config</h1>
+              <p className="text-sm text-muted">Add your Gemini API key to power Clario and Metaphor. Stored securely in your profile metadata.</p>
             </div>
             
             <input
@@ -104,28 +102,33 @@ export default function OnboardingPage() {
               placeholder="AIzaSy..."
               value={geminiKey}
               onChange={(e) => setGeminiKey(e.target.value)}
-              style={{
-                width: "100%", padding: "14px 16px", background: "var(--bg-canvas)", border: "1px solid var(--border-strong)", borderRadius: "14px", fontSize: "14px", color: "var(--text-primary)", outline: "none", marginBottom: "24px", fontFamily: "monospace"
-              }}
+              className="w-full py-3.5 px-4 mb-6 bg-surface-2 border border-border-strong rounded-xl text-sm text-foreground font-mono focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-all"
             />
             
-            <button onClick={handleSaveKeys} disabled={isLoading} style={{ width: "100%", padding: "14px", background: "var(--text-primary)", color: "var(--bg-canvas)", border: "none", borderRadius: "12px", fontSize: "14px", fontWeight: 600, display: "flex", justifyContent: "center", alignItems: "center", gap: "8px", cursor: isLoading ? "not-allowed" : "pointer", opacity: isLoading ? 0.7 : 1 }}>
+            <button
+              onClick={handleSaveKeys}
+              disabled={isLoading}
+              className="w-full py-3.5 bg-foreground hover:bg-white text-background text-sm font-semibold rounded-xl flex justify-center items-center gap-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.99]"
+            >
               {geminiKey ? "Save Keys" : "Skip for now"} <ArrowRight size={16} />
             </button>
           </div>
         )}
 
         {step === 3 && (
-          <div className="animate-enter" style={{ textAlign: "center" }}>
-            <div style={{ width: "64px", height: "64px", margin: "0 auto 32px", background: "rgba(16, 185, 129, 0.1)", border: "1px solid rgba(16, 185, 129, 0.2)", borderRadius: "16px", display: "flex", alignItems: "center", justifyContent: "center", color: "var(--green)" }}>
+          <div className="animate-fade-in text-center">
+            <div className="w-16 h-16 mx-auto mb-8 bg-neon-emerald/10 border border-neon-emerald/20 rounded-2xl flex items-center justify-center text-neon-emerald">
               <CheckCircle size={32} />
             </div>
-            <h1 className="font-serif-title" style={{ fontSize: "28px", color: "var(--text-primary)", marginBottom: "8px" }}>You're all set!</h1>
-            <p style={{ fontSize: "14px", color: "var(--text-secondary)", marginBottom: "32px", lineHeight: 1.6 }}>
+            <h1 className="font-display text-3xl font-bold text-foreground mb-2">You're all set!</h1>
+            <p className="text-sm text-muted mb-8 leading-relaxed">
               Your sovereign profile is ready. You can now use Atlas, Metaphor, and Orion securely.
             </p>
             
-            <button onClick={finishOnboarding} style={{ width: "100%", padding: "14px", background: "var(--text-primary)", color: "var(--bg-canvas)", border: "none", borderRadius: "12px", fontSize: "14px", fontWeight: 600 }}>
+            <button
+              onClick={finishOnboarding}
+              className="w-full py-3.5 bg-foreground hover:bg-white text-background text-sm font-semibold rounded-xl transition-all active:scale-[0.99]"
+            >
               Enter Ecosystem
             </button>
           </div>
