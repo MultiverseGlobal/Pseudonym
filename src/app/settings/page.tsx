@@ -47,30 +47,30 @@ export default function SettingsPage() {
   ];
 
   return (
-    <div className="max-w-2xl mx-auto px-6 pt-20 pb-32">
+    <div className="max-w-[600px] mx-auto px-6 pt-20 pb-32">
       
       {/* Header */}
-      <div className="animate-fade-in mb-14">
-        <span className="font-mono text-xs uppercase tracking-widest text-muted mb-4 inline-block">
+      <div className="pds-animate-fade mb-14">
+        <span className="pds-label mb-4 inline-block">
           Preferences
         </span>
-        <h1 className="font-display text-5xl font-bold text-foreground mb-4 leading-tight">
+        <h1 className="pds-title text-4xl mb-4">
           Ecosystem Identity & Keys
         </h1>
-        <p className="text-base text-muted leading-relaxed">
+        <p className="text-base text-[var(--pds-text-secondary)] leading-relaxed">
           Set your username and API keys once here. They are securely encrypted in your Supabase profile and dynamically loaded by Metaphor, Orion, and Atlas.
         </p>
       </div>
 
       {/* Form */}
-      <div className="animate-slide-up bg-surface-2 shadow-card border border-border-subtle p-8 sm:p-10 rounded-2xl">
+      <div className="pds-animate-slide-up pds-card p-8 sm:p-10">
         <div className="flex flex-col gap-6 mb-10">
           
           {/* Username Field */}
           <div>
             <label 
               htmlFor="username" 
-              className="block font-mono text-xs uppercase tracking-widest text-foreground mb-3"
+              className="pds-label"
             >
               Global Username
             </label>
@@ -81,23 +81,23 @@ export default function SettingsPage() {
                 placeholder="e.g. Theo"
                 value={keys.username}
                 onChange={(e) => setKeys((prev) => ({ ...prev, username: e.target.value }))}
-                className="w-full py-3.5 px-4 bg-surface-1 border border-border-strong rounded-xl text-sm text-foreground font-sans focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-all shadow-sm"
+                className="pds-input"
               />
             </div>
           </div>
 
-          <div className="h-px bg-border-subtle my-2" />
+          <div className="pds-divider my-2" />
 
           {providers.map((p) => (
             <div key={p.id}>
               <label 
                 htmlFor={p.id} 
-                className="block font-mono text-xs uppercase tracking-widest text-foreground mb-3"
+                className="pds-label"
               >
                 {p.label} API Key
               </label>
               <div className="relative">
-                <div className="absolute left-4 top-1/2 -translate-y-1/2 text-muted">
+                <div className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--pds-text-muted)]">
                   <Key size={16} />
                 </div>
                 <input
@@ -106,28 +106,27 @@ export default function SettingsPage() {
                   placeholder={p.placeholder}
                   value={keys[p.id]}
                   onChange={(e) => setKeys((prev) => ({ ...prev, [p.id]: e.target.value }))}
-                  className="w-full py-3.5 pr-4 pl-11 bg-surface-1 border border-border-strong rounded-xl text-sm text-foreground font-mono focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-all shadow-sm"
+                  className="pds-input mono icon"
                 />
               </div>
             </div>
           ))}
         </div>
 
-        <div className="flex items-center justify-between pt-6 border-t border-border-subtle">
-          <div className="text-sm flex items-center gap-2">
-            {status === "saved" && <span className="text-neon-emerald flex items-center gap-1.5"><CheckCircle2 size={16} /> Synced securely</span>}
-            {status === "error" && <span className="text-red-500 flex items-center gap-1.5"><AlertCircle size={16} /> Update failed</span>}
-            {status === "saving" && <span className="text-muted">Encrypting...</span>}
-          </div>
-          
+        <div className="flex flex-col gap-3 pt-6 border-t border-[var(--pds-border-subtle)]">
           <button
             onClick={handleSave}
             disabled={status === "saving"}
-            className="inline-flex items-center gap-2 px-6 py-3 bg-foreground hover:bg-white text-background text-sm font-medium rounded-full shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:shadow-md disabled:hover:translate-y-0 active:scale-[0.98]"
+            className="pds-btn-primary"
           >
             <Save size={16} />
             {status === "saving" ? "Saving..." : "Save Configuration"}
           </button>
+          <div className="min-h-[20px] flex justify-center">
+            {status === "saved" && <div className="pds-feedback success"><CheckCircle2 size={16} /> Synced securely</div>}
+            {status === "error" && <div className="pds-feedback error"><AlertCircle size={16} /> Update failed</div>}
+            {status === "saving" && <div className="pds-feedback loading"><div className="pds-spinner" /> Encrypting...</div>}
+          </div>
         </div>
       </div>
     </div>

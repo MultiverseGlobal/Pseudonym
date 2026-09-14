@@ -59,28 +59,28 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
 
   return (
     <div
-      className="animate-fade-in fixed inset-0 z-[100] bg-background/60 backdrop-blur-xl flex items-start justify-center pt-[12vh]"
+      className="pds-animate-fade fixed inset-0 z-[100] bg-[rgba(7,8,12,0.6)] backdrop-blur-md flex items-start justify-center pt-[12vh]"
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
-      <div className="animate-slide-up w-full max-w-lg bg-surface-1 border border-border-strong rounded-2xl shadow-card-hover overflow-hidden">
-        <div className="flex items-center px-5 py-4 border-b border-border-subtle">
-          <Search size={18} className="text-muted shrink-0" />
+      <div className="pds-animate-slide-up auth-card w-full max-w-lg overflow-hidden">
+        <div className="flex items-center px-5 py-4 border-b border-[var(--pds-border-subtle)]">
+          <Search size={18} className="text-[var(--pds-text-muted)] shrink-0" />
           <input
             autoFocus
             value={query}
             onChange={(e) => { setQuery(e.target.value); setSelectedIndex(0); }}
             onKeyDown={handleKeyDown}
             placeholder="Type a command or search..."
-            className="w-full bg-transparent border-none outline-none text-base text-foreground px-4 font-sans"
+            className="w-full bg-transparent border-none outline-none text-base text-[var(--pds-text-primary)] px-4 font-sans"
           />
           <div className="flex gap-1">
-            <span className="text-[10px] px-1.5 py-1 bg-surface-2 border border-border-subtle rounded text-muted">ESC</span>
+            <span className="text-[10px] px-1.5 py-1 bg-[var(--pds-surface-2)] border border-[var(--pds-border-subtle)] rounded text-[var(--pds-text-muted)]">ESC</span>
           </div>
         </div>
 
         <div className="max-h-[360px] overflow-y-auto p-2">
           {commands.length === 0 ? (
-            <div className="py-8 text-center text-sm text-muted">
+            <div className="py-8 text-center text-sm text-[var(--pds-text-muted)]">
               No commands found.
             </div>
           ) : (
@@ -93,22 +93,22 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
                   onMouseEnter={() => setSelectedIndex(i)}
                   className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl border transition-colors text-left cursor-pointer ${
                     isSelected
-                      ? "bg-surface-2 border-border-subtle"
+                      ? "bg-[var(--pds-surface-2)] border-[var(--pds-border-subtle)]"
                       : "bg-transparent border-transparent"
                   }`}
                 >
-                  <div className="w-6 h-6 flex items-center justify-center text-muted">
+                  <div className="w-6 h-6 flex items-center justify-center text-[var(--pds-text-muted)]">
                     {cmd.icon}
                   </div>
                   <div className="flex-1">
-                    <span className={`block text-sm font-medium ${isSelected ? "text-brand-400" : "text-foreground"}`}>
+                    <span className={`block text-[13px] font-medium transition-colors ${isSelected ? "text-[var(--pds-accent)]" : "text-[var(--pds-text-primary)]"}`}>
                       {cmd.label}
                     </span>
-                    <span className="font-mono text-[10px] uppercase tracking-widest text-muted mt-0.5 block">
+                    <span className="font-mono text-[10px] uppercase tracking-widest text-[var(--pds-text-muted)] mt-0.5 block">
                       {cmd.category}
                     </span>
                   </div>
-                  {isSelected && <ArrowRight size={14} className="text-brand-400" />}
+                  {isSelected && <ArrowRight size={14} className="text-[var(--pds-accent)]" />}
                 </button>
               );
             })

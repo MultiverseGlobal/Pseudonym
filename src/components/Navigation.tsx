@@ -42,21 +42,21 @@ function WaffleItem({ app, onClose }: { app: typeof ECOSYSTEM_APPS[0], onClose: 
       target="_blank"
       rel="noreferrer"
       onClick={onClose}
-      className="flex flex-col items-center gap-2 p-3 rounded-xl text-no-underline bg-transparent border border-transparent hover:bg-surface-2 hover:border-border-subtle transition-all relative"
+      className="flex flex-col items-center gap-2 p-3 rounded-xl text-no-underline bg-transparent border border-transparent hover:bg-[var(--pds-surface-2)] transition-all relative"
     >
       <div
-        className="w-10 h-10 rounded-xl flex items-center justify-center bg-surface-2 border border-border-subtle shadow-card overflow-hidden"
+        className="w-10 h-10 rounded-xl flex items-center justify-center pds-card"
         style={{ color: app.accentColor }}
       >
         {getEcosystemIcon(app.iconName, 20, app.accentColor)}
       </div>
-      <span className="text-[11px] text-foreground font-medium text-center leading-tight">
+      <span className="text-[11px] text-[var(--pds-text-primary)] font-medium text-center leading-tight">
         {app.name}
       </span>
       
       {/* Live Status Indicator */}
       <div className="absolute top-2.5 right-2.5">
-        <div className={`w-1.5 h-1.5 rounded-full ${isLive ? "bg-neon-emerald shadow-glow-em" : "bg-border-strong"}`} />
+        <div className={`pds-status-dot ${isLive ? "active" : ""}`} />
       </div>
     </a>
   );
@@ -111,16 +111,16 @@ export function Navigation() {
 
   return (
     <>
-      <header className="sticky top-0 z-40 w-full bg-background/80 backdrop-blur-2xl border-b border-border-subtle animate-fade-in">
+      <header className="sticky top-0 z-40 w-full nav-glass pds-animate-fade">
         <div className="w-full px-8 h-14 flex items-center justify-between gap-4">
 
           {/* Left: Logo + nav */}
           <div className="flex items-center gap-8">
             <Link href="/" className="flex items-center gap-2.5 no-underline shrink-0">
-              <div className="w-5 h-5 rounded-md bg-surface-2 border border-border-strong flex items-center justify-center shadow-card text-foreground">
+              <div className="w-5 h-5 rounded-md pds-card flex items-center justify-center text-[var(--pds-text-primary)]">
                 {getEcosystemIcon("Pseudonyms", 12, "currentColor")}
               </div>
-              <span className="font-mono text-[11px] tracking-[0.15em] uppercase text-foreground">
+              <span className="id-wordmark text-[var(--pds-text-primary)]">
                 Pseudonyms
               </span>
             </Link>
@@ -135,8 +135,8 @@ export function Navigation() {
                     href={item.href}
                     className={`px-3 py-1.5 rounded-lg text-[13px] transition-all no-underline ${
                       isActive
-                        ? "font-semibold text-foreground bg-surface-2 border border-border-subtle shadow-card"
-                        : "font-medium text-muted hover:text-foreground hover:bg-surface-2 border border-transparent"
+                        ? "font-semibold text-[var(--pds-text-primary)] bg-[var(--pds-surface-2)] border border-[var(--pds-border-subtle)] shadow-sm"
+                        : "font-medium text-[var(--pds-text-secondary)] hover:text-[var(--pds-text-primary)] hover:bg-[var(--pds-surface-2)] border border-transparent"
                     }`}
                   >
                     {item.label}
@@ -155,8 +155,8 @@ export function Navigation() {
                 onClick={() => { setIsWaffleOpen(!isWaffleOpen); setIsProfileOpen(false); }}
                 className={`w-9 h-9 bg-transparent border rounded-lg cursor-pointer flex items-center justify-center transition-all ${
                   isWaffleOpen
-                    ? "bg-surface-2 border-border-subtle text-foreground"
-                    : "border-transparent text-muted hover:bg-surface-2 hover:text-foreground"
+                    ? "bg-[var(--pds-surface-2)] border-[var(--pds-border-subtle)] text-[var(--pds-text-primary)]"
+                    : "border-transparent text-[var(--pds-text-secondary)] hover:bg-[var(--pds-surface-2)] hover:text-[var(--pds-text-primary)]"
                 }`}
               >
                 <div className="grid grid-cols-3 gap-[2.5px] w-[13px] h-[13px]">
@@ -167,8 +167,8 @@ export function Navigation() {
               </button>
 
               {isWaffleOpen && (
-                <div className="animate-slide-up absolute right-0 top-[calc(100%+8px)] w-72 bg-surface-1 border border-border-subtle rounded-2xl p-4 shadow-card-hover z-50">
-                  <p className="font-mono text-[10px] uppercase tracking-widest text-muted pb-3 border-b border-border-subtle mb-3">
+                <div className="pds-animate-slide-up auth-card absolute right-0 top-[calc(100%+8px)] w-72 p-4 z-50">
+                  <p className="font-mono text-[10px] uppercase tracking-widest text-[var(--pds-text-secondary)] pb-3 border-b border-[var(--pds-border-subtle)] mb-3">
                     Ecosystem Connect
                   </p>
 
@@ -187,32 +187,32 @@ export function Navigation() {
                 onClick={() => { setIsProfileOpen(!isProfileOpen); setIsWaffleOpen(false); }}
                 className={`flex items-center gap-2.5 py-1 pl-3 pr-1.5 rounded-full cursor-pointer transition-all border ${
                   isProfileOpen
-                    ? "bg-surface-2 border-border-subtle shadow-card"
-                    : "bg-transparent border-transparent hover:bg-surface-2"
+                    ? "bg-[var(--pds-surface-2)] border-[var(--pds-border-subtle)] shadow-sm"
+                    : "bg-transparent border-transparent hover:bg-[var(--pds-surface-2)]"
                 }`}
               >
-                <span className="text-[13px] font-medium text-foreground">
+                <span className="text-[13px] font-medium text-[var(--pds-text-primary)]">
                   {user?.email?.split("@")[0] ?? ""}
                 </span>
-                <div className="w-7 h-7 rounded-full bg-foreground flex items-center justify-center text-[10px] font-semibold text-background font-mono tracking-wide">
+                <div className="w-7 h-7 rounded-full bg-[var(--pds-accent)] flex items-center justify-center text-[10px] font-semibold text-[var(--pds-accent-inv)] font-mono tracking-wide">
                   {initials}
                 </div>
               </button>
 
               {isProfileOpen && (
-                <div className="animate-slide-up absolute right-0 top-[calc(100%+12px)] w-64 bg-surface-1 border border-border-subtle rounded-2xl p-5 shadow-card-hover z-50">
-                  <div className="mb-4 pb-4 border-b border-border-subtle">
-                    <p className="text-[15px] font-semibold text-foreground mb-1">
+                <div className="pds-animate-slide-up auth-card absolute right-0 top-[calc(100%+12px)] w-64 p-5 z-50">
+                  <div className="mb-4 pb-4 border-b border-[var(--pds-border-subtle)]">
+                    <p className="text-[15px] font-semibold text-[var(--pds-text-primary)] mb-1">
                       {user?.email?.split("@")[0]}
                     </p>
-                    <p className="text-xs text-muted">
+                    <p className="text-xs text-[var(--pds-text-secondary)]">
                       {user?.email}
                     </p>
                   </div>
 
                   <button
                     onClick={handleSignOut}
-                    className="w-full py-2.5 px-3 bg-transparent border border-border-subtle rounded-lg text-[13px] font-medium text-muted flex items-center gap-2 cursor-pointer transition-all hover:text-red-500 hover:border-red-500/40 hover:bg-red-500/5"
+                    className="w-full py-2.5 px-3 bg-transparent border border-transparent rounded-lg text-[13px] font-medium text-[var(--pds-text-secondary)] flex items-center gap-2 cursor-pointer transition-all hover:text-[var(--pds-danger)] hover:bg-[rgba(220,38,38,0.05)] hover:border-[rgba(220,38,38,0.3)]"
                   >
                     <LogOut size={14} />
                     Sign out globally

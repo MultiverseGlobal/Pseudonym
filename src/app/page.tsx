@@ -71,17 +71,17 @@ export default function OverviewPage() {
   ];
 
   return (
-    <div className="max-w-3xl mx-auto px-6 pt-20 pb-32">
+    <div className="max-w-[680px] mx-auto px-6 pt-20 pb-32">
       
       {/* Hero Section */}
-      <div className="animate-fade-in mb-16 text-center">
-        <span className="font-mono text-xs uppercase tracking-widest text-muted mb-4 inline-block">
+      <div className="pds-animate-fade mb-16">
+        <span className="pds-label mb-4 inline-block">
           Pseudonyms Sovereign ID
         </span>
-        <h1 className="font-display text-5xl font-bold text-foreground mb-4 leading-tight">
+        <h1 className="pds-title text-4xl mb-4">
           {user ? `Welcome back, ${user.user_metadata?.username || user.email?.split("@")[0]}.` : "Initializing Workspace..."}
         </h1>
-        <p className="text-base text-muted max-w-lg mx-auto leading-relaxed">
+        <p className="text-base text-[var(--pds-text-secondary)] leading-relaxed">
           The central cognitive context and identity layer across your entire multi-agent ecosystem.
         </p>
       </div>
@@ -91,48 +91,35 @@ export default function OverviewPage() {
         {features.map((f, i) => (
           <div
             key={f.index}
-            className={`animate-slide-up bg-surface-2 hover:bg-surface-3 shadow-card hover:shadow-card-hover border border-border-subtle p-8 grid grid-cols-[auto_1fr_auto] gap-6 items-start rounded-2xl transition-all`}
-            style={{ animationDelay: `${(i + 1) * 100}ms`, animationFillMode: 'both' }}
+            className={`pds-animate-slide-up pds-feature-card ${f.status ? 'active' : 'inactive'} p-6 flex flex-col gap-3 delay-${Math.min(i + 1, 5)}`}
           >
-            {/* Index Badge */}
-            <div className="w-10 h-10 rounded-xl bg-surface-1 border border-border-strong flex items-center justify-center text-foreground">
-              <span className="font-mono text-xs">{f.index}</span>
-            </div>
-
-            {/* Content */}
-            <div className="pt-1">
-              <div className="flex items-center gap-3 mb-2">
-                <h2 className="text-base font-semibold text-foreground m-0">
-                  {f.title}
-                </h2>
-                
-                {/* Status Pill */}
-                <div className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border ${
-                  f.status 
-                    ? "bg-neon-emerald/10 border-neon-emerald/20" 
-                    : "bg-surface-1 border-border-strong"
-                }`}>
-                  <div className={`w-1.5 h-1.5 rounded-full ${f.status ? "bg-neon-emerald shadow-glow-em" : "bg-muted"}`} />
-                  <span className={`font-mono text-[10px] uppercase tracking-wider ${f.status ? "text-neon-emerald" : "text-muted"}`}>
-                    {f.statusLabel}
-                  </span>
-                </div>
-              </div>
+            <div className="flex items-center justify-between gap-4">
+              <h2 className="text-[15px] font-semibold text-[var(--pds-text-primary)] m-0">
+                {f.title}
+              </h2>
               
-              <p className="text-sm text-muted leading-relaxed m-0">
-                {f.body}
-              </p>
+              {/* Status Pill */}
+              <div className={`pds-status-badge ${f.status ? 'active' : ''}`}>
+                <div className={`pds-status-dot ${f.status ? 'active' : ''}`} />
+                {f.statusLabel}
+              </div>
+            </div>
+            
+            <p className="text-[14px] text-[var(--pds-text-secondary)] leading-relaxed m-0">
+              {f.body}
+            </p>
 
-              {f.href && f.cta && (
+            {f.href && f.cta && (
+              <div className="mt-2">
                 <Link
                   href={f.href}
-                  className="inline-flex items-center gap-1.5 mt-4 text-sm font-semibold text-brand-400 hover:text-brand-300 transition-colors"
+                  className="pds-btn-text no-underline"
                 >
                   {f.cta}
                   <ArrowRight size={14} />
                 </Link>
-              )}
-            </div>
+              </div>
+            )}
           </div>
         ))}
       </div>
